@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Прогонз доллара</title>
+</head>
+<body>
+    <div style="height: 100%;width: 100%; z-index: 10;">
+        <canvas id="myChart"></canvas>
+    </div>
+    <div class="center">
+    <!-- <h3>Данная нейросеть была создана с целью анализа адекватности модели при прогнозе курса валюты</h3> -->
+    <h2>Предсказанная сетью цена за доллар на 07.06.23: {{predicted_price_day}}</h2>
+    <h2>Действительная цена за доллар: {{true_price}}</h2>
+    <h2>Предсказанная сетью цена за доллар на следующую неделю: {{predicted_price_week}}</h2>
+    <h2>Действительная цена за доллар на следующую неделю: {{true_price_week}}</h2>
+    
+    </div>
+
+    
+    <div></div>
+    <style>
+        div{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        body{
+            background-color: rgb(224, 224, 224)
+        }
+        h2{
+            font-weight: 500;
+            text-align: right;
+        }
+        h3{
+            text-align: center;
+        }
+    </style>
+    <script>
+        const labels = {{labels}}
+        const data_test = {
+                label: 'Исходные данные',
+                backgroundColor: 'rgb(140, 140, 140)',
+                borderColor: 'rgb(140, 140, 140)',
+                pointRadius:0,
+                data: {{ data1}}
+            };
+
+        const data_predicted = {
+                label: 'Предсказание',
+                backgroundColor: 'rgb(245, 5, 29)',
+                borderColor: 'rgb(245, 5, 29)',
+                pointRadius:0,
+                data: {{ data2}},
+            };
+        
+        const config = {
+            type: 'line',
+            data: {
+                labels:labels,
+                datasets:[data_test,data_predicted]
+            },
+            options: { 
+                maintainAspectRatio: false,
+                plugins:{
+                    legend:{
+                        labels:{
+                            font:{
+                                size:14,
+                                weight:'bold'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                }
+        }};
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+ 
+    </script>
+</body>
+</html>
